@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mock Interview - Professional Interview Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .recording-pulse {
+            animation: recording-pulse 1.5s infinite;
+        }
+        
+        @keyframes recording-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        
+        .violation-alert {
+            animation: violation-shake 0.5s;
+        }
+        
+        @keyframes violation-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+            color: #8b5cf6;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- INSTRUCTIONS SECTION -->
+    <div id="instructions" class="min-h-screen flex items-center justify-center p-4">
+        <div class="glass-effect rounded-2xl p-8 max-w-5xl w-full hover-scale">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full mb-4">
+                    <i class="fas fa-info-circle text-white text-3xl"></i>
+                </div>
+                <h1 class="text-4xl font-bold text-gray-800 mb-2">Interview Instructions</h1>
+                <p class="text-gray-600">Please read these guidelines carefully before starting</p>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                    <h3 class="font-semibold text-blue-800 mb-2">
+                        <i class="fas fa-video mr-2"></i>Camera Requirements
+                    </h3>
+                    <div class="flex items-start space-x-4">
+                        <ul class="text-blue-700 space-y-1 text-sm flex-1">
+                            <li>• Keep your camera on throughout the interview</li>
+                            <li>• Ensure good lighting and clear visibility</li>
+                            <li>• Only one person should be visible</li>
+                            <li>• Don't cover or hide your camera</li>
+                        </ul>
+                        <div class="w-20 h-20 rounded-lg shadow-md bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-video text-blue-500 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                    <h3 class="font-semibold text-green-800 mb-2">
+                        <i class="fas fa-desktop mr-2"></i>Browser & Tab Rules
+                    </h3>
+                    <div class="flex items-start space-x-4">
+                        <ul class="text-green-700 space-y-1 text-sm flex-1">
+                            <li>• Stay on this interview tab at all times</li>
+                            <li>• No switching to other tabs or windows</li>
+                            <li>• Don't open new browser windows</li>
+                            <li>• Focus solely on the interview</li>
+                        </ul>
+                        <div class="w-20 h-20 rounded-lg shadow-md bg-green-100 flex items-center justify-center">
+                            <i class="fas fa-desktop text-green-500 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded">
+                    <h3 class="font-semibold text-orange-800 mb-2">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>Violation Policy
+                    </h3>
+                    <div class="flex items-start space-x-4">
+                        <ul class="text-orange-700 space-y-1 text-sm flex-1">
+                            <li>• 2 violations of any type will terminate the interview</li>
+                            <li>• Multiple faces detected = violation (2 max)</li>
+                            <li>• No face detected = violation (5 max)</li>
+                            <li>• Tab switching = violation (2 max)</li>
+                            <li>• First violation = warning, second = termination</li>
+                        </ul>
+                        <div class="w-20 h-20 rounded-lg shadow-md bg-orange-100 flex items-center justify-center">
+                            <i class="fas fa-exclamation-triangle text-orange-500 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-purple-50 border-l-4 border-purple-500 p-4 rounded">
+                    <h3 class="font-semibold text-purple-800 mb-2">
+                        <i class="fas fa-microphone mr-2"></i>Recording Guidelines
+                    </h3>
+                    <div class="flex items-start space-x-4">
+                        <ul class="text-purple-700 space-y-1 text-sm flex-1">
+                            <li>• Speak clearly and concisely</li>
+                            <li>• Answer each question completely</li>
+                            <li>• Use the recording controls properly</li>
+                            <li>• Interview duration: 20 minutes</li>
+                        </ul>
+                        <div class="w-20 h-20 rounded-lg shadow-md bg-purple-100 flex items-center justify-center">
+                            <i class="fas fa-microphone text-purple-500 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 border-l-4 border-gray-500 p-4 rounded">
+                    <h3 class="font-semibold text-gray-800 mb-2">
+                        <i class="fas fa-laptop mr-2"></i>Technical Requirements
+                    </h3>
+                    <div class="flex items-start space-x-4">
+                        <ul class="text-gray-700 space-y-1 text-sm flex-1">
+                            <li>• Stable internet connection</li>
+                            <li>• Modern browser (Chrome, Firefox, Safari)</li>
+                            <li>• Working microphone and camera</li>
+                            <li>• Allow browser permissions when prompted</li>
+                        </ul>
+                        <div class="w-20 h-20 rounded-lg shadow-md bg-gray-100 flex items-center justify-center">
+                            <i class="fas fa-laptop text-gray-500 text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 flex justify-center">
+                <button onclick="showSetup()" 
+                        class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-8 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105">
+                    <i class="fas fa-arrow-right mr-2"></i>I Understand - Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SETUP SECTION -->
+    <div id="setup" class="hidden min-h-screen flex items-center justify-center p-4">
+        <div class="glass-effect rounded-2xl p-8 max-w-5xl w-full hover-scale">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full mb-4">
+                    <i class="fas fa-briefcase text-white text-3xl"></i>
+                </div>
+                <h1 class="text-4xl font-bold text-gray-800 mb-2">AI Mock Interview</h1>
+                <p class="text-gray-600">Practice your interview skills with AI-powered feedback</p>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="group">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-user mr-2"></i>Your Name
+                    </label>
+                    <input type="text" id="name" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                           placeholder="Enter your full name">
+                </div>
+                
+                <div class="group">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-file-alt mr-2"></i>Job Description
+                    </label>
+                    <textarea id="jd" rows="4"
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                              placeholder="Paste the complete job description here..."></textarea>
+                </div>
+                
+                <div class="group">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-file-pdf mr-2"></i>Resume Upload
+                    </label>
+                    <div class="relative">
+                        <input type="file" id="resumeFile" accept=".pdf,.docx" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100">
+                    </div>
+                </div>
+                
+                <button onclick="startInterview()" 
+                        class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105">
+                    <i class="fas fa-play mr-2"></i>Start Interview
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERVIEW SECTION -->
+    <div id="interview" class="hidden min-h-screen p-4">
+        <div class="max-w-4xl mx-auto">
+            <!-- HEADER WITH TIMER AND VIOLATIONS -->
+            <div class="glass-effect rounded-2xl p-6 mb-6 fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- TIMER -->
+                    <div class="text-center">
+                        <div class="flex items-center justify-center mb-2">
+                            <svg class="progress-ring" width="60" height="60">
+                                <circle cx="30" cy="30" r="25" stroke="#e5e7eb" stroke-width="4" fill="none"/>
+                                <circle id="progressCircle" cx="30" cy="30" r="25" stroke="#8b5cf6" stroke-width="4" fill="none"
+                                        stroke-dasharray="157" stroke-dashoffset="0" stroke-linecap="round"/>
+                            </svg>
+                            <div class="absolute flex items-center justify-center w-14 h-14">
+                                <span id="timer" class="text-lg font-bold text-gray-800">20:00</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">Time Remaining</p>
+                    </div>
+                    
+                    <!-- MATCH INFO -->
+                    <div class="text-center">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-2">
+                            <i class="fas fa-chart-line text-green-600 text-2xl"></i>
+                        </div>
+                        <p class="text-sm text-gray-600">Resume-JD Match</p>
+                        <p id="matchPercentage" class="text-2xl font-bold text-green-600">-</p>
+                    </div>
+                    
+                    <!-- VIOLATION STATUS -->
+                    <div class="text-center">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-center space-x-2">
+                                <i class="fas fa-users text-orange-500"></i>
+                                <span class="text-sm">Multiple Faces: <span id="multipleFaceViolations" class="font-bold">0</span>/2</span>
+                            </div>
+                            <div class="flex items-center justify-center space-x-2">
+                                <i class="fas fa-user-slash text-red-500"></i>
+                                <span class="text-sm">No Face: <span id="noFaceViolations" class="font-bold">0</span>/5</span>
+                            </div>
+                            <div class="flex items-center justify-center space-x-2">
+                                <i class="fas fa-window-restore text-blue-500"></i>
+                                <span class="text-sm">Tab Switch: <span id="tabViolations" class="font-bold">0</span>/2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- VIOLATION WARNINGS -->
+                <div class="mt-4 space-y-2">
+                    <div id="multipleFaceWarning" class="hidden bg-orange-50 border border-orange-200 text-orange-800 px-4 py-2 rounded-lg text-sm violation-alert">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>Multiple faces detected!
+                    </div>
+                    <div id="noFaceWarning" class="hidden bg-red-50 border border-red-200 text-red-800 px-4 py-2 rounded-lg text-sm violation-alert">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>No face detected!
+                    </div>
+                    <div id="tabWarning" class="hidden bg-blue-50 border border-blue-200 text-blue-800 px-4 py-2 rounded-lg text-sm violation-alert">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>Tab switch detected!
+                    </div>
+                </div>
+            </div>
+            
+            <!-- QUESTION SECTION -->
+            <div class="glass-effect rounded-2xl p-6 mb-6 fade-in">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-question-circle text-purple-600 text-xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">Interview Question</h2>
+                </div>
+                <div id="question" class="text-lg text-gray-700 leading-relaxed bg-gray-50 p-4 rounded-lg">
+                    Loading question...
+                </div>
+            </div>
+            
+            <!-- RECORDING CONTROLS -->
+            <div class="glass-effect rounded-2xl p-6 mb-6 fade-in">
+                <div class="text-center">
+                    <div id="recordingControls" class="space-y-4">
+                        <button id="recordBtn" onclick="startListening()" 
+                                class="bg-red-500 hover:bg-red-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 transform hover:scale-105">
+                            <i class="fas fa-microphone mr-2"></i>Start Recording
+                        </button>
+                        <button id="stopBtn" onclick="stopRecording()" 
+                                class="hidden bg-gray-500 hover:bg-gray-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 transform hover:scale-105 recording-pulse">
+                            <i class="fas fa-stop mr-2"></i>Stop & Submit
+                        </button>
+                        <div id="recordingTimer" class="hidden text-gray-600">
+                            <i class="fas fa-clock mr-2"></i>Recording: <span id="recordingTime">0</span>s
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ANSWER SECTION -->
+            <div id="answerSection" class="glass-effect rounded-2xl p-6 mb-6 fade-in hidden">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-comments text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800">Your Answer</h3>
+                </div>
+                <div id="userAnswer" class="text-gray-700 bg-gray-50 p-4 rounded-lg leading-relaxed">
+                    Processing your answer...
+                </div>
+            </div>
+            
+            <!-- NAVIGATION BUTTONS -->
+            <div class="flex justify-center space-x-4 fade-in">
+                <button onclick="nextQuestion()" id="nextBtn" 
+                        class="hidden bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+                    <i class="fas fa-arrow-right mr-2"></i>Next Question
+                </button>
+                <button onclick="endInterview()" 
+                        class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+                    <i class="fas fa-stop-circle mr-2"></i>End Interview
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIOLATION ALERT OVERLAY -->
+    <div id="violationOverlay" class="hidden fixed inset-0 bg-red-600 bg-opacity-90 z-50 flex items-center justify-center">
+        <div class="text-center text-white pulse-animation">
+            <i class="fas fa-exclamation-triangle text-6xl mb-4"></i>
+            <h2 id="violationTitle" class="text-3xl font-bold mb-2">VIOLATION DETECTED</h2>
+            <p id="violationMessage" class="text-xl">Interview integrity compromised</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/interview.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/monitor.js') }}"></script>
+    
+    <script>
+        function showSetup() {
+            document.getElementById('instructions').style.display = 'none';
+            document.getElementById('setup').style.display = 'flex';
+            document.getElementById('setup').classList.add('fade-in');
+        }
+    </script>
+</body>
+</html>
