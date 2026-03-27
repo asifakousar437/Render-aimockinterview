@@ -1,5 +1,10 @@
 from flask import Flask, render_template  # pyright: ignore[reportMissingImports]
-from .routes.interview_routes import interview_bp
+
+# Handle both direct execution and module import
+try:
+    from .routes.interview_routes import interview_bp
+except ImportError:
+    from routes.interview_routes import interview_bp
 
 app = Flask(__name__)
 app.register_blueprint(interview_bp)
