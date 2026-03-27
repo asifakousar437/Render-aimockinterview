@@ -1,7 +1,10 @@
 import json
 import re
 
-from .llm_service import call_llm
+try:
+    from .llm_service import call_llm
+except ImportError:
+    from llm_service import call_llm
 
 
 _EMAIL_RE = re.compile(r"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}", re.IGNORECASE)
@@ -375,7 +378,10 @@ No explanations, no text, just the number.
 """
 
     try:
+        try:
         from .llm_service import call_llm
+    except ImportError:
+        from llm_service import call_llm
         llm_response = call_llm(prompt)
         
         if llm_response:

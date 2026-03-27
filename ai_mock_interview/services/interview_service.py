@@ -1,4 +1,7 @@
-from .llm_service import call_llm
+try:
+    from .llm_service import call_llm
+except ImportError:
+    from llm_service import call_llm
 
 
 # -----------------------------------

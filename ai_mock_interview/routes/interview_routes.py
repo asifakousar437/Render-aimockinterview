@@ -1,12 +1,22 @@
 from flask import Blueprint, request, jsonify, render_template
-from ..utils.file_utils import save_file
-from ..services.resume_service import extract_text
-from ..services.jd_service import extract_candidate_name, extract_resume_entities, is_resume, match_score
-from ..services.interview_service import generate_first_question_json, generate_next_question_json
-from ..services.evaluation_service import evaluate_answer, generate_feedback, generate_answer_feedback
-from ..services.speech_service import speech_to_text
+try:
+    from ..utils.file_utils import save_file
+    from ..services.resume_service import extract_text
+    from ..services.jd_service import extract_candidate_name, extract_resume_entities, is_resume, match_score
+    from ..services.interview_service import generate_first_question_json, generate_next_question_json
+    from ..services.evaluation_service import evaluate_answer, generate_feedback, generate_answer_feedback
+    from ..services.speech_service import speech_to_text
+    from ..utils.camera_monitor import detect_faces
+except ImportError:
+    from utils.file_utils import save_file
+    from services.resume_service import extract_text
+    from services.jd_service import extract_candidate_name, extract_resume_entities, is_resume, match_score
+    from services.interview_service import generate_first_question_json, generate_next_question_json
+    from services.evaluation_service import evaluate_answer, generate_feedback, generate_answer_feedback
+    from services.speech_service import speech_to_text
+    from utils.camera_monitor import detect_faces
+
 import os
-from ..utils.camera_monitor import detect_faces
 import subprocess
 from datetime import datetime
 
@@ -254,6 +264,8 @@ def start():
     if not candidate_technologies:
         try:
             from ..services.llm_service import call_llm
+        except ImportError:
+            from services.llm_service import call_llm
             resume_snippet = resume_text[:2000]  # Use first 2000 chars for analysis
             
             tech_prompt = f"""
@@ -862,7 +874,10 @@ def generate_enhanced_feedback(percentage, answers):
     """Generate comprehensive feedback with strengths, weaknesses, and technology recommendations using LLM"""
     
     # Generate dynamic feedback using LLM
-    from ..services.llm_service import call_llm
+    try:
+        from ..services.llm_service import call_llm
+    except ImportError:
+        from services.llm_service import call_llm
     
     # Prepare answers summary for context
     answers_summary = ""
@@ -932,7 +947,10 @@ def get_fallback_feedback(percentage):
         import sys
         import os
         sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        from ..services.llm_service import call_grok_llm
+        try:
+            from ..services.llm_service import call_grok_llm
+        except ImportError:
+            from services.llm_service import call_grok_llm
         
         prompt = f"""
 You are an expert technical interviewer and career coach.

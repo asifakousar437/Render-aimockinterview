@@ -1,7 +1,10 @@
 import requests
 import re
 import json
-from ..config import Config
+try:
+    from ..config import Config
+except ImportError:
+    from config import Config
 
 # -------------------------------
 # LLM CALL (Reusable)
