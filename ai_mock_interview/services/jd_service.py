@@ -378,31 +378,31 @@ No explanations, no text, just the number.
 """
 
     try:
-        try:
-        from .llm_service import call_llm
-    except ImportError:
-        from llm_service import call_llm
-        llm_response = call_llm(prompt)
-        
-        if llm_response:
-            # Extract number from response
-            import re
-            numbers = re.findall(r'\b(\d{1,3})\b', llm_response)
-            if numbers:
-                score = int(numbers[0])
-                # Ensure score is within valid range
-                score = max(0, min(100, score))
-                print(f"DEBUG: Grok LLM match score: {score}%")
-                return score
-        
-        print("DEBUG: Grok LLM matching failed, using fallback")
-        
-    except Exception as e:
-        print(f"DEBUG: LLM matching error: {e}")
+    from .llm_service import call_llm
+except ImportError:
+    from llm_service import call_llm
     
-    # Fallback to heuristic matching if LLM fails
-    print("DEBUG: Falling back to heuristic matching")
-    return _heuristic_match_score(jd_text, resume_text, entities)
+    llm_response = call_llm(prompt)
+    
+    if llm_response:
+        # Extract number from response
+        import re
+        numbers = re.findall(r'\b(\d{1,3})\b', llm_response)
+        if numbers:
+            score = int(numbers[0])
+            # Ensure score is within valid range
+            score = max(0, min(100, score))
+            print(f"DEBUG: Grok LLM match score: {score}%")
+            return score
+    
+    print("DEBUG: Grok LLM matching failed, using fallback")
+    
+except Exception as e:
+    print(f"DEBUG: LLM matching error: {e}")
+
+# Fallback to heuristic matching if LLM fails
+print("DEBUG: Falling back to heuristic matching")
+return _heuristic_match_score(jd_text, resume_text, entities)
 
 
 def _heuristic_match_score(jd: str, resume: str, entities: dict | None = None) -> int:
