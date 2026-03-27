@@ -10,12 +10,9 @@ SpeechRecognition==3.10.0
 
 # Audio Processing
 numpy==1.26.2
-sounddevice==0.4.6
 
 # Computer Vision (for face detection)
 opencv-python==4.9.0.80
-ultralytics==8.0.196
-mediapipe==0.10.33
 
 # File Processing
 python-docx==1.1.0
@@ -27,18 +24,5 @@ nltk==3.8.1
 # Environment Variables
 python-dotenv==1.0.0
 
-# Development Tools
-pytest==7.4.3
-black==23.12.1
-flake8==7.0.0
-
-# Optional: For advanced audio processing
-librosa==0.10.1
-
-# Optional: For better resume parsing
-spacy==3.7.2
-
-# Optional: For enhanced text processing
-textblob==0.17.1
-
-# Build cache cleared - 2026-03-27
+# Core ML dependencies
+mediapipe==0.10.33
