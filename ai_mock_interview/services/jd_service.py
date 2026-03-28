@@ -378,9 +378,9 @@ No explanations, no text, just the number.
 """
 
     try:
-    from .llm_service import call_llm
-except ImportError:
-    from llm_service import call_llm
+        from .llm_service import call_llm
+    except ImportError:
+        from llm_service import call_llm
     
     llm_response = call_llm(prompt)
     
