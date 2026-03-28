@@ -1,7 +1,7 @@
 from flask import Flask, render_template  # pyright: ignore[reportMissingImports]
 
 # Use absolute imports for consistency
-from routes.interview_routes import interview_bp
+from ai_mock_interview.routes.interview_routes import interview_bp
 
 app = Flask(__name__)
 app.register_blueprint(interview_bp)

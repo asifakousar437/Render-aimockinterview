@@ -1,13 +1,13 @@
 from flask import Blueprint, request, jsonify, render_template
 
 # Use absolute imports for consistency
-from utils.file_utils import save_file
-from services.resume_service import extract_text
-from services.jd_service import extract_candidate_name, extract_resume_entities, is_resume, match_score
-from services.interview_service import generate_first_question_json, generate_next_question_json
-from services.evaluation_service import evaluate_answer, generate_feedback, generate_answer_feedback
-from services.speech_service import speech_to_text
-from utils.camera_monitor import detect_faces
+from ai_mock_interview.utils.file_utils import save_file
+from ai_mock_interview.services.resume_service import extract_text
+from ai_mock_interview.services.jd_service import extract_candidate_name, extract_resume_entities, is_resume, match_score
+from ai_mock_interview.services.interview_service import generate_first_question_json, generate_next_question_json
+from ai_mock_interview.services.evaluation_service import evaluate_answer, generate_feedback, generate_answer_feedback
+from ai_mock_interview.services.speech_service import speech_to_text
+from ai_mock_interview.utils.camera_monitor import detect_faces
 
 import os
 import subprocess
@@ -256,7 +256,7 @@ def start():
     # If still no technologies found, extract from resume text using LLM for better technical identification
     if not candidate_technologies:
         try:
-            from services.llm_service import call_llm
+            from ai_mock_interview.services.llm_service import call_llm
         except ImportError:
             from llm_service import call_llm
             resume_snippet = resume_text[:2000]  # Use first 2000 chars for analysis
@@ -868,7 +868,7 @@ def generate_enhanced_feedback(percentage, answers):
     
     # Generate dynamic feedback using LLM
     try:
-        from services.llm_service import call_llm
+        from ai_mock_interview.services.llm_service import call_llm
     except ImportError:
         from llm_service import call_llm
     
