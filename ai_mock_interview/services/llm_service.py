@@ -1,7 +1,7 @@
 import requests
 
 # Use absolute imports for consistency
-from config import Config
+from ai_mock_interview.config import Config
 
 def call_llm(prompt):
     url = "https://api.groq.com/openai/v1/chat/completions"

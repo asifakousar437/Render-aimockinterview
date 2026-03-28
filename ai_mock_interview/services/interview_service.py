@@ -1,5 +1,6 @@
 # Use absolute imports for consistency
-from llm_service import call_llm
+from ai_mock_interview.llm_service import call_llm
+
 
 
 # -----------------------------------

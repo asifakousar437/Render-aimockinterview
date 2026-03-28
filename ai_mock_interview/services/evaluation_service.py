@@ -3,7 +3,7 @@ import re
 import json
 
 # Use absolute imports for consistency
-from config import Config
+from ai_mock_interview.config import Config
 
 # -------------------------------
 # LLM CALL (Reusable)
