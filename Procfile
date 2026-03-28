@@ -1,2 +1,2 @@
-web: python ai_mock_interview/app.py
-# Direct execution fix - 2026-03-27
+web: python -m ai_mock_interview.app
+# Module execution with proper package structure - 2026-03-27

@@ -1,8 +1,7 @@
 import requests
-try:
-    from ..config import Config
-except ImportError:
-    from config import Config
+
+# Use absolute imports for consistency
+from config import Config
 
 def call_llm(prompt):
     url = "https://api.groq.com/openai/v1/chat/completions"

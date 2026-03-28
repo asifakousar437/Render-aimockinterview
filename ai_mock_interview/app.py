@@ -1,10 +1,7 @@
 from flask import Flask, render_template  # pyright: ignore[reportMissingImports]
 
-# Handle both direct execution and module import
-try:
-    from .routes.interview_routes import interview_bp
-except ImportError:
-    from routes.interview_routes import interview_bp
+# Use absolute imports for consistency
+from routes.interview_routes import interview_bp
 
 app = Flask(__name__)
 app.register_blueprint(interview_bp)
@@ -23,4 +20,4 @@ if __name__ == "__main__":
     import os
 
     port = int(os.getenv("PORT", "5001"))
-    app.run(debug=True, host="127.0.0.1", port=port)
+    app.run(debug=True, host="0.0.0.0", port=port)

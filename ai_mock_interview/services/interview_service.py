@@ -1,7 +1,5 @@
-try:
-    from .llm_service import call_llm
-except ImportError:
-    from llm_service import call_llm
+# Use absolute imports for consistency
+from llm_service import call_llm
 
 
 # -----------------------------------

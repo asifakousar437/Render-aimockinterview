@@ -1,20 +1,13 @@
 from flask import Blueprint, request, jsonify, render_template
-try:
-    from ..utils.file_utils import save_file
-    from ..services.resume_service import extract_text
-    from ..services.jd_service import extract_candidate_name, extract_resume_entities, is_resume, match_score
-    from ..services.interview_service import generate_first_question_json, generate_next_question_json
-    from ..services.evaluation_service import evaluate_answer, generate_feedback, generate_answer_feedback
-    from ..services.speech_service import speech_to_text
-    from ..utils.camera_monitor import detect_faces
-except ImportError:
-    from utils.file_utils import save_file
-    from services.resume_service import extract_text
-    from services.jd_service import extract_candidate_name, extract_resume_entities, is_resume, match_score
-    from services.interview_service import generate_first_question_json, generate_next_question_json
-    from services.evaluation_service import evaluate_answer, generate_feedback, generate_answer_feedback
-    from services.speech_service import speech_to_text
-    from utils.camera_monitor import detect_faces
+
+# Use absolute imports for consistency
+from utils.file_utils import save_file
+from services.resume_service import extract_text
+from services.jd_service import extract_candidate_name, extract_resume_entities, is_resume, match_score
+from services.interview_service import generate_first_question_json, generate_next_question_json
+from services.evaluation_service import evaluate_answer, generate_feedback, generate_answer_feedback
+from services.speech_service import speech_to_text
+from utils.camera_monitor import detect_faces
 
 import os
 import subprocess
@@ -263,9 +256,9 @@ def start():
     # If still no technologies found, extract from resume text using LLM for better technical identification
     if not candidate_technologies:
         try:
-            from ..services.llm_service import call_llm
-        except ImportError:
             from services.llm_service import call_llm
+        except ImportError:
+            from llm_service import call_llm
             resume_snippet = resume_text[:2000]  # Use first 2000 chars for analysis
             
             tech_prompt = f"""
@@ -875,9 +868,9 @@ def generate_enhanced_feedback(percentage, answers):
     
     # Generate dynamic feedback using LLM
     try:
-        from ..services.llm_service import call_llm
-    except ImportError:
         from services.llm_service import call_llm
+    except ImportError:
+        from llm_service import call_llm
     
     # Prepare answers summary for context
     answers_summary = ""
@@ -948,9 +941,9 @@ def get_fallback_feedback(percentage):
         import os
         sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         try:
-            from ..services.llm_service import call_grok_llm
-        except ImportError:
             from services.llm_service import call_grok_llm
+        except ImportError:
+            from llm_service import call_grok_llm
         
         prompt = f"""
 You are an expert technical interviewer and career coach.
