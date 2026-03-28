@@ -378,7 +378,7 @@ No explanations, no text, just the number.
         from ai_mock_interview.llm_service import call_llm
     except ImportError:
         from llm_service import call_llm
-    
+        
     llm_response = call_llm(prompt)
     
     if llm_response:
